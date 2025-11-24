@@ -79,9 +79,9 @@ jobs:
         run: |
          pwd
           mkdir -p artifacts
-          cp ./build/hrtng.* artifacts/
-          cp ./bin/plugins/*.txt artifacts/
-          cp ida-plugin.json artifacts/
+          cp -v ./build/hrtng* artifacts/
+          cp -v ./bin/plugins/*.txt artifacts/
+          cp -v ida-plugin.json artifacts/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

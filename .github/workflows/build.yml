@@ -73,7 +73,7 @@ jobs:
         run: |
           cmake -B build -S src/ \
             -DIDASDK_VER=${{ matrix.ida.ver }} \
-            -DIDASDK_DIR=ida-sdk/src \
+            -DIDASDK_DIR=ida-sdk/src
           cmake --build build --config Release
 
       - name: Collect artifacts

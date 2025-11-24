@@ -56,8 +56,9 @@ jobs:
       - name: Download IDA SDK ${{ matrix.ida.version }}
         shell: bash
         run: |
-          git clone https://github.com/HexRaysSA/ida-sdk.git ./ida-sdk
-          cd ./ida-sdk
+          pwd
+          git clone https://github.com/HexRaysSA/ida-sdk.git ida-sdk
+          cd ida-sdk
           git checkout v${{ matrix.ida.version }}
           cd ..
 
@@ -71,14 +72,14 @@ jobs:
         env:
           IDASDK: ${{ github.workspace }}/ida-sdk
         run: |
-          cmake -B build -S src/ \
-            -DIDASDK_VER=${{ matrix.ida.ver }} \
-            -DIDASDK_DIR=ida-sdk/src
+          pwd
+          cmake -B build -S src -D IDASDK_VER=${{ matrix.ida.ver }} -D IDASDK_DIR=ida-sdk/src
           cmake --build build --config Release
 
       - name: Collect artifacts
         shell: bash
         run: |
+         pwd
           mkdir -p artifacts
           cp  ./build/hrtng.* artifacts/
           cp  ./bin/*.txt artifacts/

@@ -71,7 +71,7 @@ jobs:
         shell: bash
         run: |
           pwd
-          cmake -B build -S src -D IDASDK_VER=${{ matrix.ida.ver }} -D IDASDK_DIR=${{ github.workspace }}/ida-sdk/src
+          cmake -B build -S src -D IDASDK_VER=${{ matrix.ida.ver }} -D IDASDK_DIR="${{ github.workspace }}/ida-sdk/src"
           cmake --build build --config Release
 
       - name: Collect artifacts
@@ -79,9 +79,9 @@ jobs:
         run: |
          pwd
           mkdir -p artifacts
-          cp  ./build/hrtng.* artifacts/
-          cp  ./bin/*.txt artifacts/
-          jq '.plugin.idaVersions = "==${{ matrix.ida.version }}"' ida-plugin.json > artifacts/ida-plugin.json
+          cp ./build/hrtng.* artifacts/
+          cp ./bin/plugins/*.txt artifacts/
+          cp ida-plugin.json artifacts/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

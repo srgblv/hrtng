@@ -28,13 +28,13 @@ jobs:
         os:
           - runner: ubuntu-latest
             name: linux
-            mask: *.so
+            mask: "*.so"
           - runner: windows-latest
             name: windows
-            mask: Release/*.dll
+            mask: "Release/*.dll"
           - runner: macos-latest
             name: macos
-            mask: *.dylib
+            mask: "*.dylib"
         ida:
           - version: "9.2"
             ver: "92"
@@ -59,7 +59,6 @@ jobs:
       - name: Download IDA SDK ${{ matrix.ida.version }}
         shell: bash
         run: |
-          pwd
           git clone https://github.com/HexRaysSA/ida-sdk.git ida-sdk
           cd ida-sdk
           git checkout v${{ matrix.ida.version }}
@@ -73,14 +72,12 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          pwd
           cmake -B build -S src -D IDASDK_VER=${{ matrix.ida.ver }} -D IDASDK_DIR="${{ github.workspace }}/ida-sdk/src"
           cmake --build build --config Release
 
       - name: Collect artifacts
         shell: bash
         run: |
-         pwd
           mkdir -p artifacts
           cp -v ./build/${{ matrix.os.mask }} artifacts/
           cp -v ./bin/plugins/*.txt artifacts/

@@ -28,10 +28,13 @@ jobs:
         os:
           - runner: ubuntu-latest
             name: linux
+            mask: *.so
           - runner: windows-latest
             name: windows
+            mask: Release/*.dll
           - runner: macos-latest
             name: macos
+            mask: *.dylib
         ida:
           - version: "9.2"
             ver: "92"
@@ -79,7 +82,7 @@ jobs:
         run: |
          pwd
           mkdir -p artifacts
-          cp -v ./build/hrtng* artifacts/
+          cp -v ./build/${{ matrix.os.mask }} artifacts/
           cp -v ./bin/plugins/*.txt artifacts/
           cp -v ida-plugin.json artifacts/
 
